@@ -7,10 +7,16 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 import Toybox.WatchUi;
 
-const WEEKDAY_ABBR as Array<String> = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
-const MONTH_ABBR as Array<String> = [
+const WEEKDAY_ABBR_PT as Array<String> = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+const MONTH_ABBR_PT as Array<String> = [
     "JAN", "FEV", "MAR", "ABR", "MAI", "JUN",
     "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"
+];
+
+const WEEKDAY_ABBR_EN as Array<String> = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const MONTH_ABBR_EN as Array<String> = [
+    "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+    "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 ];
 
 class SpeedyWatchView extends WatchUi.WatchFace {
@@ -97,14 +103,17 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         battery.setColor(fgColor);
         battery.setText(batteryStr);
 
-        // Dia da semana e data
+        // Dia da semana e data (PT se o relogio estiver em portugues, EN nos demais casos)
         var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var isPortuguese = System.getDeviceSettings().systemLanguage == System.LANGUAGE_POR;
+        var weekdayAbbr = isPortuguese ? WEEKDAY_ABBR_PT : WEEKDAY_ABBR_EN;
+        var monthAbbr = isPortuguese ? MONTH_ABBR_PT : MONTH_ABBR_EN;
 
         var weekday = View.findDrawableById("WeekdayLabel") as Text;
         weekday.setColor(fgColor);
-        weekday.setText(WEEKDAY_ABBR[today.day_of_week - 1]);
+        weekday.setText(weekdayAbbr[today.day_of_week - 1]);
 
-        var dateStr = Lang.format("$1$ $2$", [today.day, MONTH_ABBR[today.month - 1]]);
+        var dateStr = Lang.format("$1$ $2$", [today.day, monthAbbr[today.month - 1]]);
         var date = View.findDrawableById("DateLabel") as Text;
         date.setColor(fgColor);
         date.setText(dateStr);
