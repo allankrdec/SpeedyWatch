@@ -29,14 +29,14 @@
         id="HeartIcon"
         filename="../drawables/heart.svg"
         x="32"
-        y="62"
+        y="72"
         horizontalJustification="center"
         verticalJustification="center"/>
 
     <label
         id="HeartLabel"
         x="32"
-        y="84"
+        y="94"
         font="Graphics.FONT_SMALL"
         justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
         color="Graphics.COLOR_WHITE"/>
@@ -47,14 +47,14 @@
         id="BatteryIcon"
         filename="../drawables/battery.svg"
         x="144"
-        y="62"
+        y="72"
         horizontalJustification="center"
         verticalJustification="center"/>
 
     <label
         id="BatteryLabel"
         x="144"
-        y="84"
+        y="94"
         font="Graphics.FONT_SMALL"
         justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
         color="Graphics.COLOR_WHITE"/>
