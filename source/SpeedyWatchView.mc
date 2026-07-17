@@ -14,6 +14,8 @@ const MONTH_ABBR as Array<String> = [
 
 class SpeedyWatchView extends WatchUi.WatchFace {
 
+    private var isSleeping as Boolean = false;
+
     function initialize() {
         WatchFace.initialize();
     }
@@ -84,10 +86,13 @@ class SpeedyWatchView extends WatchUi.WatchFace {
 
         View.onUpdate(dc);
 
-        // Linhas divisorias (teste): separam hora / FC+bateria / dia+data
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(24, 60, 152, 60);
-        dc.drawLine(24, 114, 152, 114);
+        // Linhas divisorias: escondidas no modo de baixo consumo (sleep/AOD)
+        // pra acender menos pixels na tela e economizar bateria
+        if (!isSleeping) {
+            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+            dc.drawLine(24, 60, 152, 60);
+            dc.drawLine(24, 114, 152, 114);
+        }
     }
 
     // Called when this View is removed from the screen. Save the
@@ -98,10 +103,19 @@ class SpeedyWatchView extends WatchUi.WatchFace {
 
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
+        isSleeping = false;
+        WatchUi.requestUpdate();
     }
 
     // Terminate any active timers and prepare for slow updates.
     function onEnterSleep() as Void {
+        // Forcado em false por enquanto: nao queremos esconder as linhas
+        // divisorias so por a tela estar em modo de baixo consumo (o
+        // "sleep" aqui e so a tela, nao tem nada a ver com o usuario
+        // dormindo). Deixar pronto pra reativar se um dia fizermos algo
+        // tipo modo "nao perturbe" de verdade.
+        isSleeping = false;
+        WatchUi.requestUpdate();
     }
 
 }
