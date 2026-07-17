@@ -53,16 +53,24 @@ class SpeedyWatchView extends WatchUi.WatchFace {
             }
         }
 
-        var timeString = Lang.format(
-            "$1$:$2$",
-            [hour, clockTime.min.format("%02d")]
-        );
+        var minute = clockTime.min;
+        var timeY = 11;
+        var screenWidth = dc.getWidth();
 
-        var time = View.findDrawableById("TimeLabel") as Text;
-        time.setColor(fgColor);
-        time.setText(timeString);
+        var timeTokens = bigTimeTokens(hour, minute);
+        var timeWidth = bigTimeWidth(timeTokens);
+        var timeEndX = (screenWidth + timeWidth) / 2;
+
+        // Nao deixa o AM/PM passar da borda direita, mesmo com hora de 2
+        // digitos (ex: "12:33 PM")
+        var amPmX = timeEndX + 4;
+        var amPmMaxX = screenWidth - 20;
+        if (amPmX > amPmMaxX) {
+            amPmX = amPmMaxX;
+        }
 
         var amPm = View.findDrawableById("AmPmLabel") as Text;
+        amPm.setLocation(amPmX, timeY + 24);
         amPm.setColor(fgColor);
         amPm.setVisible(!is24Hour);
         amPm.setText(amPmStr);
@@ -102,6 +110,10 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         date.setText(dateStr);
 
         View.onUpdate(dc);
+
+        // Hora em digitos grandes (matriz de pontos 5x7), desenhada depois do
+        // View.onUpdate porque o Background limpa a tela antes disso
+        drawBigTime(dc, hour, minute, timeY, screenWidth, fgColor);
 
         // Linhas divisorias: escondidas no modo de baixo consumo (sleep/AOD)
         // pra acender menos pixels na tela e economizar bateria

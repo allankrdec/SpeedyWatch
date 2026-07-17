@@ -6,17 +6,10 @@
 
     <drawable class="Background" />
 
-    <!-- Hora -->
+    <!-- Hora: desenhada manualmente (matriz de pontos 5x7) direto no onUpdate, nao usa label -->
 
-    <label
-        id="TimeLabel"
-        x="center"
-        y="4"
-        font="Graphics.FONT_NUMBER_THAI_HOT"
-        justification="Graphics.TEXT_JUSTIFY_CENTER"
-        color="Graphics.COLOR_WHITE"/>
-
-    <!-- AM/PM: so aparece quando o relogio esta configurado em formato 12h -->
+    <!-- AM/PM: so aparece quando o relogio esta configurado em formato 12h.
+         x/y sao reposicionados dinamicamente em codigo, apos os digitos. -->
 
     <label
         id="AmPmLabel"
