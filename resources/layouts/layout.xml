@@ -2,6 +2,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
 
+    <!-- Fundo (preto ou branco conforme a config. "Inverter Cores") -->
+
+    <drawable class="Background" />
+
     <!-- Hora -->
 
     <label

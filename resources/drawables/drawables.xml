@@ -3,4 +3,10 @@
 
     <bitmap id="LauncherIcon" filename="launcher_icon.svg" dithering="none"/>
 
+    <!-- Variantes branca/preta pra suportar a config. "Inverter Cores" -->
+    <bitmap id="HeartIconWhite" filename="heart.svg" dithering="none"/>
+    <bitmap id="HeartIconBlack" filename="heart_black.svg" dithering="none"/>
+    <bitmap id="BatteryIconWhite" filename="battery.svg" dithering="none"/>
+    <bitmap id="BatteryIconBlack" filename="battery_black.svg" dithering="none"/>
+
 </drawables>

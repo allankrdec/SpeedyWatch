@@ -1,4 +1,5 @@
 import Toybox.ActivityMonitor;
+import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
@@ -34,6 +35,10 @@ class SpeedyWatchView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
 
+        // Cores (config. "Inverter Cores")
+        var invert = Application.Properties.getValue("InvertColors") as Boolean;
+        var fgColor = invert ? Graphics.COLOR_BLACK : Graphics.COLOR_WHITE;
+
         // Hora (respeita config. 12h/24h do relogio)
         var clockTime = System.getClockTime();
         var is24Hour = System.getDeviceSettings().is24Hour;
@@ -54,9 +59,11 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         );
 
         var time = View.findDrawableById("TimeLabel") as Text;
+        time.setColor(fgColor);
         time.setText(timeString);
 
         var amPm = View.findDrawableById("AmPmLabel") as Text;
+        amPm.setColor(fgColor);
         amPm.setVisible(!is24Hour);
         amPm.setText(amPmStr);
 
@@ -66,22 +73,32 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         if (hrSample != null && hrSample.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
             heartRateStr = hrSample.heartRate.toString();
         }
+        var heartIcon = View.findDrawableById("HeartIcon") as Bitmap;
+        heartIcon.setBitmap(invert ? Rez.Drawables.HeartIconBlack : Rez.Drawables.HeartIconWhite);
+
         var heart = View.findDrawableById("HeartLabel") as Text;
+        heart.setColor(fgColor);
         heart.setText(heartRateStr);
 
         // Bateria
         var batteryStr = Lang.format("$1$%", [System.getSystemStats().battery.format("%d")]);
+        var batteryIcon = View.findDrawableById("BatteryIcon") as Bitmap;
+        batteryIcon.setBitmap(invert ? Rez.Drawables.BatteryIconBlack : Rez.Drawables.BatteryIconWhite);
+
         var battery = View.findDrawableById("BatteryLabel") as Text;
+        battery.setColor(fgColor);
         battery.setText(batteryStr);
 
         // Dia da semana e data
         var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 
         var weekday = View.findDrawableById("WeekdayLabel") as Text;
+        weekday.setColor(fgColor);
         weekday.setText(WEEKDAY_ABBR[today.day_of_week - 1]);
 
         var dateStr = Lang.format("$1$ $2$", [today.day, MONTH_ABBR[today.month - 1]]);
         var date = View.findDrawableById("DateLabel") as Text;
+        date.setColor(fgColor);
         date.setText(dateStr);
 
         View.onUpdate(dc);
@@ -89,7 +106,7 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         // Linhas divisorias: escondidas no modo de baixo consumo (sleep/AOD)
         // pra acender menos pixels na tela e economizar bateria
         if (!isSleeping) {
-            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+            dc.setColor(fgColor, Graphics.COLOR_TRANSPARENT);
             dc.drawLine(24, 60, 152, 60);
             dc.drawLine(24, 114, 152, 114);
         }
