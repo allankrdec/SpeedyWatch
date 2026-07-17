@@ -83,6 +83,11 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         date.setText(dateStr);
 
         View.onUpdate(dc);
+
+        // Linhas divisorias (teste): separam hora / FC+bateria / dia+data
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(24, 60, 152, 60);
+        dc.drawLine(24, 114, 152, 114);
     }
 
     // Called when this View is removed from the screen. Save the
