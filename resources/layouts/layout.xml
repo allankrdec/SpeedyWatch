@@ -1,0 +1,71 @@
+<layout id="WatchFace"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+
+    <!-- Hora -->
+
+    <label
+        id="TimeLabel"
+        x="center"
+        y="4"
+        font="Graphics.FONT_NUMBER_THAI_HOT"
+        justification="Graphics.TEXT_JUSTIFY_CENTER"
+        color="Graphics.COLOR_WHITE"/>
+
+    <!-- FC: icone em cima, valor embaixo (coluna esquerda) -->
+
+    <bitmap
+        id="HeartIcon"
+        filename="../drawables/heart.svg"
+        x="44"
+        y="76"
+        horizontalJustification="center"
+        verticalJustification="center"/>
+
+    <label
+        id="HeartLabel"
+        x="44"
+        y="98"
+        font="Graphics.FONT_SMALL"
+        justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
+        color="Graphics.COLOR_WHITE"/>
+
+    <!-- Bateria: icone em cima, valor embaixo (coluna direita - espelho) -->
+
+    <bitmap
+        id="BatteryIcon"
+        filename="../drawables/battery.svg"
+        x="132"
+        y="76"
+        horizontalJustification="center"
+        verticalJustification="center"/>
+
+    <label
+        id="BatteryLabel"
+        x="132"
+        y="98"
+        font="Graphics.FONT_SMALL"
+        justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
+        color="Graphics.COLOR_WHITE"/>
+
+    <!-- Dia da semana abreviado (coluna esquerda, sem icone) -->
+
+    <label
+        id="WeekdayLabel"
+        x="44"
+        y="134"
+        font="Graphics.FONT_SMALL"
+        justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
+        color="Graphics.COLOR_WHITE"/>
+
+    <!-- Data (coluna direita - espelho, sem icone) -->
+
+    <label
+        id="DateLabel"
+        x="132"
+        y="134"
+        font="Graphics.FONT_SMALL"
+        justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
+        color="Graphics.COLOR_WHITE"/>
+
+</layout>
