@@ -4,4 +4,8 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.SwapTimeAndDate" title="@Strings.SwapTimeAndDateTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
 </settings>

@@ -45,6 +45,13 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         var invert = Application.Properties.getValue("InvertColors") as Boolean;
         var fgColor = invert ? Graphics.COLOR_BLACK : Graphics.COLOR_WHITE;
 
+        // Posicao da hora e do dia/data (config. "Trocar Hora/Data").
+        // A linha do meio (coracao/bateria) nunca muda de lugar, porque e
+        // onde os ponteiros passam.
+        var swapTimeAndDate = Application.Properties.getValue("SwapTimeAndDate") as Boolean;
+        var timeY = swapTimeAndDate ? 128 : 11;
+        var weekdayDateY = swapTimeAndDate ? 30 : 140;
+
         // Hora (respeita config. 12h/24h do relogio)
         var clockTime = System.getClockTime();
         var is24Hour = System.getDeviceSettings().is24Hour;
@@ -60,7 +67,6 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         }
 
         var minute = clockTime.min;
-        var timeY = 11;
         var screenWidth = dc.getWidth();
 
         var timeTokens = bigTimeTokens(hour, minute);
@@ -110,11 +116,13 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         var monthAbbr = isPortuguese ? MONTH_ABBR_PT : MONTH_ABBR_EN;
 
         var weekday = View.findDrawableById("WeekdayLabel") as Text;
+        weekday.setLocation(38, weekdayDateY);
         weekday.setColor(fgColor);
         weekday.setText(weekdayAbbr[today.day_of_week - 1]);
 
         var dateStr = Lang.format("$1$ $2$", [today.day, monthAbbr[today.month - 1]]);
         var date = View.findDrawableById("DateLabel") as Text;
+        date.setLocation(128, weekdayDateY);
         date.setColor(fgColor);
         date.setText(dateStr);
 
