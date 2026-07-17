@@ -32,15 +32,31 @@ class SpeedyWatchView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
 
-        // Hora
+        // Hora (respeita config. 12h/24h do relogio)
         var clockTime = System.getClockTime();
+        var is24Hour = System.getDeviceSettings().is24Hour;
+        var hour = clockTime.hour;
+        var amPmStr = "";
+
+        if (!is24Hour) {
+            amPmStr = (hour >= 12) ? "PM" : "AM";
+            hour = hour % 12;
+            if (hour == 0) {
+                hour = 12;
+            }
+        }
+
         var timeString = Lang.format(
             "$1$:$2$",
-            [clockTime.hour, clockTime.min.format("%02d")]
+            [hour, clockTime.min.format("%02d")]
         );
 
         var time = View.findDrawableById("TimeLabel") as Text;
         time.setText(timeString);
+
+        var amPm = View.findDrawableById("AmPmLabel") as Text;
+        amPm.setVisible(!is24Hour);
+        amPm.setText(amPmStr);
 
         // Frequência cardíaca
         var heartRateStr = "--";
