@@ -73,7 +73,7 @@
 
     <label
         id="DateLabel"
-        x="140"
+        x="126"
         y="140"
         font="Graphics.FONT_SMALL"
         justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
