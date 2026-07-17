@@ -128,8 +128,8 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         // pra acender menos pixels na tela e economizar bateria
         if (!isSleeping) {
             dc.setColor(fgColor, Graphics.COLOR_TRANSPARENT);
-            dc.drawLine(24, 60, 152, 60);
-            dc.drawLine(24, 114, 152, 114);
+            dc.drawLine(18, 60, 158, 60);
+            dc.drawLine(18, 114, 158, 114);
         }
     }
 

@@ -60,9 +60,9 @@
 
     <label
         id="WeekdayLabel"
-        x="36"
+        x="38"
         y="140"
-        font="Graphics.FONT_SMALL"
+        font="Graphics.FONT_LARGE"
         justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
         color="Graphics.COLOR_WHITE"/>
 
@@ -70,9 +70,9 @@
 
     <label
         id="DateLabel"
-        x="126"
+        x="128"
         y="140"
-        font="Graphics.FONT_SMALL"
+        font="Graphics.FONT_LARGE"
         justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER"
         color="Graphics.COLOR_WHITE"/>
 
