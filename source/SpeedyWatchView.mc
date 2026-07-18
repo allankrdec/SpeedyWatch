@@ -2,6 +2,7 @@ import Toybox.ActivityMonitor;
 import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
+import Toybox.Math;
 import Toybox.System;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
@@ -101,7 +102,8 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         heart.setText(heartRateStr);
 
         // Bateria
-        var batteryStr = Lang.format("$1$%", [System.getSystemStats().battery.format("%d")]);
+        var batteryPct = Math.round(System.getSystemStats().battery).toNumber();
+        var batteryStr = Lang.format("$1$%", [batteryPct]);
         var batteryIcon = View.findDrawableById("BatteryIcon") as Bitmap;
         batteryIcon.setBitmap(invert ? Rez.Drawables.BatteryIconBlack : Rez.Drawables.BatteryIconWhite);
 
