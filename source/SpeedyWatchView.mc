@@ -6,6 +6,7 @@ import Toybox.Math;
 import Toybox.System;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
+import Toybox.Weather;
 import Toybox.WatchUi;
 
 const WEEKDAY_ABBR_PT as Array<String> = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
@@ -19,6 +20,44 @@ const MONTH_ABBR_EN as Array<String> = [
     "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 ];
+
+// Fallback do modo Automatico quando nao tem clima/localizacao: horario
+// fixo, sem depender de API nenhuma.
+const AUTO_INVERT_FALLBACK_START_HOUR = 18; // inverte a partir daqui
+const AUTO_INVERT_FALLBACK_START_MIN = 30;
+const AUTO_INVERT_FALLBACK_END_HOUR = 6;    // volta ao normal a partir daqui
+const AUTO_INVERT_FALLBACK_END_MIN = 0;
+
+function isNightByFixedHours(now as Time.Moment) as Boolean {
+    var info = Gregorian.info(now, Time.FORMAT_SHORT);
+    var minutesNow = info.hour * 60 + info.min;
+    var startMinutes = AUTO_INVERT_FALLBACK_START_HOUR * 60 + AUTO_INVERT_FALLBACK_START_MIN;
+    var endMinutes = AUTO_INVERT_FALLBACK_END_HOUR * 60 + AUTO_INVERT_FALLBACK_END_MIN;
+    return (minutesNow >= startMinutes) || (minutesNow < endMinutes);
+}
+
+// Config. "Inverter Cores" = Automatico: inverte depois do por do sol de
+// verdade quando da pra calcular (usa a localizacao da ultima consulta de
+// clima, sem pedir permissao de GPS a parte); sem clima/localizacao/horario
+// de sol disponivel (nem sempre vem em todo relogio), cai pro horario fixo
+// definido acima.
+function resolveAutoInvert(now as Time.Moment) as Boolean {
+    var conditions = Weather.getCurrentConditions();
+    if (conditions == null || conditions.observationLocationPosition == null) {
+        return isNightByFixedHours(now);
+    }
+
+    var location = conditions.observationLocationPosition;
+    var today = Time.today();
+    var sunrise = Weather.getSunrise(location, today);
+    var sunset = Weather.getSunset(location, today);
+
+    if (sunrise == null || sunset == null) {
+        return isNightByFixedHours(now);
+    }
+
+    return (now.compare(sunrise) < 0) || (now.compare(sunset) > 0);
+}
 
 class SpeedyWatchView extends WatchUi.WatchFace {
 
@@ -42,8 +81,12 @@ class SpeedyWatchView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
 
-        // Cores (config. "Inverter Cores")
-        var invert = Application.Properties.getValue("InvertColors") as Boolean;
+        // Cores (config. "Inverter Cores": 0 = nao, 1 = sim, 2 = automatico)
+        var invertSetting = Application.Properties.getValue("InvertColors") as Number;
+        var invert = invertSetting == 1;
+        if (invertSetting == 2) {
+            invert = resolveAutoInvert(Time.now());
+        }
         var fgColor = invert ? Graphics.COLOR_BLACK : Graphics.COLOR_WHITE;
 
         // Posicao da hora e do dia/data (config. "Trocar Hora/Data").

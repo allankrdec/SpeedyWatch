@@ -1,4 +1,8 @@
 <strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="SettingsTitle">Configurações</string>
     <string id="InvertColorsTitle">Inverter Cores</string>
+    <string id="InvertColorsNo">Não</string>
+    <string id="InvertColorsYes">Sim</string>
+    <string id="InvertColorsAuto">Automático</string>
     <string id="SwapTimeAndDateTitle">Trocar Hora/Data</string>
 </strings>

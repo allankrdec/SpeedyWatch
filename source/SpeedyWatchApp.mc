@@ -21,6 +21,12 @@ class SpeedyWatchApp extends Application.AppBase {
         return [ new SpeedyWatchView() ];
     }
 
+    // Tela de configuracao no proprio relogio (menu "Personalizar" do
+    // carrossel de mostradores) - ver SettingsMenu.mc
+    function getSettingsView() as [Views] or [Views, InputDelegates] or Null {
+        return [ new SettingsMenu(), new SettingsMenuDelegate() ];
+    }
+
 }
 
 function getApp() as SpeedyWatchApp {
