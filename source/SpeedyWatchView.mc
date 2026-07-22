@@ -81,6 +81,8 @@ class SpeedyWatchView extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
 
+        var clockTime = System.getClockTime();
+
         // Cores (config. "Inverter Cores": 0 = nao, 1 = sim, 2 = automatico)
         var invertSetting = Application.Properties.getValue("InvertColors") as Number;
         var invert = invertSetting == 1;
@@ -97,7 +99,6 @@ class SpeedyWatchView extends WatchUi.WatchFace {
         var weekdayDateY = swapTimeAndDate ? 30 : 140;
 
         // Hora (respeita config. 12h/24h do relogio)
-        var clockTime = System.getClockTime();
         var is24Hour = System.getDeviceSettings().is24Hour;
         var hour = clockTime.hour;
         var amPmStr = "";
